@@ -1,0 +1,42 @@
+<nav>
+
+	<div id="nav-left">
+
+		<ul>
+			<li><a href="#">Accueil</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+
+	</div>
+	<div id="nav-right">
+
+		{% if app.user  %}
+			
+		{% endif %}
+
+		<ul>
+			<li>
+				<a href="#">S'inscrire
+				</a>
+			</li>
+			<li>
+				<a href="#">Se connecter
+				</a>
+			</li>
+			{% if app.user %}
+
+				<li>
+					<a href="#">Se deconnecter
+					</a>
+				</li>
+				<li>
+					<a href="#">Mon Compte
+					</a>
+				</li>
+			{% endif %}
+		</ul>
+
+	</div>
+
+
+</nav>
