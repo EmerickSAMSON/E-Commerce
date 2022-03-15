@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | Panier{% endblock %}
+
+{% block body %}
+
+    {% if articles | length > 0 %}
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Images</th>
+            <th>Quantité</th>
+            <th>Prix TTC</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for article in articles %}
+        <tr>
+            <td>{{ article.product.name }}</td>
+            <td><img style="width: 200px" src="{{asset('uploads/images/' ~ article.product.images)}}" alt="{{article.product.name}}"></td>
+            <td>{{article.quantity}}</td>
+            <td>{{ article.product.prixTTC|format_number({fraction_digit: 2}) * article.quantity }} €</td>
+        </tr>
+    {% endfor %}
+    <tfoot>
+        <tr>
+            <td colspan="3"> Total :</td>
+            <td>{{total|format_number({fraction_digit: 2})}} €</td>
+        </tr>
+    
+    </tfoot>
+    </tbody>
+</table>
+    {% else %}
+        <p>Votre panier est vide</p>
+    {% endif %}
+
+{% endblock %}

@@ -28,7 +28,7 @@
 			{% if app.user %}
 
 				<li>
-					<a href="#">Se deconnecter
+					<a href="{{path('app_logout')}}">Se déconnecter
 					</a>
 				</li>
 				<li>
@@ -36,6 +36,8 @@
 					</a>
 				</li>
 			{% endif %}
+
+			<li><a href="{{path('app_panier')}}">Mon Panier</a></li>
 		</ul>
 
 	</div>

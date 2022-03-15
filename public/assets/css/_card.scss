@@ -1,0 +1,30 @@
+.newProduct {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    img {
+        width: 300px;
+    }
+    .card {
+        width: 500px;
+        height: 400px;
+        border: 0.15rem solid rgba(0, 0, 0, 0.3);
+        text-align: center;
+        display: block;
+        border-radius: 5px;
+        h3 {
+            text-transform: capitalize;
+            text-decoration: underline;
+        }
+        img {
+            margin: auto;
+            align-items: center;
+            align-content: center;
+        }
+        p {
+            text-align: center;
+            color: #222;
+        }
+    }
+}
