@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ parent() }}
+	| Mon compte
+{% endblock %}
+
+{% block body %}
+
+	<div id="user-info">
+		<p>
+			<span style="text-decoration: underline">Nom:</span>
+			{{app.user.nom}}</p>
+		<p>
+			<span style="text-decoration: underline">Pseudo:</span>
+			{{app.user.username}}</p>
+		<p>
+			<span style="text-decoration: underline">E-mail:</span>
+			{{app.user.email}}</p>
+		<p>
+			<span style="text-decoration: underline">Date de création:</span>
+			{{app.user.createdAt|date("d/m/Y")}}</p>
+	</div>
+	<div id="my-orders">
+
+</div>
+
+
+{% endblock %}

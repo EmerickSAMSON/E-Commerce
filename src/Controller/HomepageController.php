@@ -19,4 +19,12 @@ class HomepageController extends AbstractController
             'products' => $product
         ]);
     }
+
+
+    #[Route('/profil', name: 'profil')]
+    public function profil(){
+        return $this->render('homepage/profil.html.twig',[
+            
+        ]);
+    }
 }

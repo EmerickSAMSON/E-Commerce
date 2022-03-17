@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-nav {
+header {
   width: 100%;
   height: 10rem;
   display: -webkit-box;
@@ -15,7 +15,7 @@ nav {
       align-content: center;
 }
 
-nav a {
+header a {
   margin: auto;
   text-transform: capitalize;
   text-decoration: none;
@@ -26,32 +26,32 @@ nav a {
   text-align: center;
 }
 
-nav a:visited {
+header a:visited {
   color: #0e0e0e;
 }
 
-nav a:hover {
-  color: #4e4e4e;
+header a:hover {
+  color: #6789ab;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
 
-nav #nav-right {
+header #nav-right {
   padding-right: 6rem;
 }
 
-nav #nav-left {
+header #nav-left {
   padding-left: 6rem;
 }
 
-nav ul {
+header ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   list-style: none;
 }
 
-nav ul li {
+header ul li {
   padding: 0 20px;
 }
 
@@ -99,6 +99,7 @@ nav ul li {
 
 * {
   font-family: "Poppins", sans-serif;
+  color: #323232;
 }
 
 body {

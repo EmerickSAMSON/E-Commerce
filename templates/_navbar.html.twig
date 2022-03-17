@@ -1,15 +1,10 @@
-<nav>
+<header class="ui header">
+
 
 	<div id="nav-left">
 
-		<ul>
-			<li>
-				<a href="{{path('homepage')}}">Accueil</a>
-			</li>
-			<li>
-				<a href="#">Contact</a>
-			</li>
-		</ul>
+		<a href="{{path('homepage')}}">Accueil</a>
+
 
 	</div>
 	<div id="nav-right">
@@ -32,15 +27,17 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">Mon Compte
+					<a href="{{path('profil')}}">Mon Compte
 					</a>
 				</li>
 			{% endif %}
 
-			<li><a href="{{path('app_panier')}}">Mon Panier</a></li>
+			<li>
+				<a href="{{path('app_panier')}}">Mon Panier</a>
+			</li>
 		</ul>
 
 	</div>
 
 
-</nav>
+</header>
