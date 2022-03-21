@@ -1,42 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ parent() }} | Panier{% endblock %}
+{% block title %}
+	{{ parent() }}
+	| Panier
+{% endblock %}
 
 {% block body %}
 
-    {% if articles | length > 0 %}
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Images</th>
-            <th>Quantité</th>
-            <th>Prix TTC</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for article in articles %}
-        <tr>
-            <td>{{ article.product.name }}</td>
-            <td><img style="width: 200px" src="{{asset('uploads/images/' ~ article.product.images)}}" alt="{{article.product.name}}"></td>
-            <td>{{article.quantity}}</td>
-            <td>{{ article.product.prixTTC|format_number({fraction_digit: 2}) * article.quantity }} €</td>
-        </tr>
-    {% endfor %}
-    <tfoot>
-        <tr>
-            <td colspan="3"> Total :</td>
-            <td>{{total|format_number({fraction_digit: 2})}} €</td>
-        </tr>
-    
-    </tfoot>
-    </tbody>
-</table>
-<input type="submit" value="Valider le panier">
-<input type="reset" value="Vider le panier">
+	{% if articles | length > 0 %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Nom</th>
+					<th>Images</th>
+					<th>Quantité</th>
+					<th>Prix TTC</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for article in articles %}
+					<tr>
+						<td>{{ article.product.name }}</td>
+						<td><img style="width: 200px" src="{{asset('uploads/images/' ~ article.product.images)}}" alt="{{article.product.name}}"></td>
+						<td>{{article.quantity}}</td>
+							<td>{{ article.product.prixTTC|format_number({fraction_digit: 2}) * article.quantity }}
+							€</td>
+						<td><a href="{{path('panier_delete', {'id': article.product.id})}}">Retirer du panier</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3">
+						Total :</td>
+					<td>{{total|format_number({fraction_digit: 2})}}
+						€</td>
+				</tr>
 
-    {% else %}
-        <p>Votre panier est vide</p>
-    {% endif %}
+			</tfoot>
+		</tbody>
+	</table>
 
-{% endblock %}
+	<a href="{{ path('panier_validate')}}">valider le panier</a>
+	<a href="{{ path('panier_delete_all')}}">vider le panier</a>
+
+
+{% else %}
+	<p>Votre panier est vide</p>
+{% endif %}{% endblock %}

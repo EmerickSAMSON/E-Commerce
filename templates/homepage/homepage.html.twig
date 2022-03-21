@@ -6,15 +6,18 @@
 {% endblock %}
 
 {% block body %}
-	<div class="newProduct">
-		{% for product in products %}
-			<div class="card">
-				<h3>{{product.name}}</h3>
-				<img src="{{asset('uploads/images/' ~ product.images) }}" alt="{{product.name}}">
-				<p>{{product.description}}</p>
-				<p>{{ product.prixTTC|format_number({fraction_digit: 2}) }}€</p>
-				<a href="{{path('app_product_show', {'id':product.id})}}">Voir le produit</a>
-			</div>
-		{% endfor %}
+
+	<div id="product">
+		<div class="newProduct">
+			{% for product in products %}
+				<div class="card">
+					<h3>{{product.name}}</h3>
+					<img src="{{asset('uploads/images/' ~ product.images) }}" alt="{{product.name}}">
+					<p>{{product.description}}</p>
+					<p>{{ product.prixTTC|format_number({fraction_digit: 2}) }}€</p>
+					<a href="{{path('app_product_show', {'id':product.id})}}">Voir le produit</a>
+				</div>
+			{% endfor %}
+		</div>
 	</div>
 {% endblock %}
