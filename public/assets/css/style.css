@@ -17,7 +17,6 @@ header {
 
 header a {
   margin: auto;
-  text-transform: capitalize;
   text-decoration: none;
   color: #0e0e0e;
   -webkit-transition: 0.5s;
@@ -55,35 +54,34 @@ header ul li {
   padding: 0 20px;
 }
 
-.newProduct {
-  width: 100%;
+#product {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  position: relative;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  max-width: 100vw;
 }
 
-.newProduct img {
+#product .newProduct img {
   width: 300px;
 }
 
-.newProduct .card {
-  width: 500px;
-  height: 400px;
+#product .newProduct .card {
+  width: 600px;
+  height: 700px;
   border: 0.15rem solid rgba(0, 0, 0, 0.3);
   text-align: center;
-  display: block;
   border-radius: 5px;
 }
 
-.newProduct .card h3 {
-  text-transform: capitalize;
+#product .newProduct .card h3 {
+  text-transform: uppercase;
   text-decoration: underline;
 }
 
-.newProduct .card img {
+#product .newProduct .card img {
   margin: auto;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -92,7 +90,7 @@ header ul li {
       align-content: center;
 }
 
-.newProduct .card p {
+#product .newProduct .card p {
   text-align: center;
   color: #222;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +23,11 @@ class HomepageController extends AbstractController
 
 
     #[Route('/profil', name: 'profil')]
-    public function profil(){
+    public function profil(OrderRepository $orderRepository){
+        $order = $orderRepository->findAll();
+
         return $this->render('homepage/profil.html.twig',[
-            
+            "orders" => $order
         ]);
     }
 }

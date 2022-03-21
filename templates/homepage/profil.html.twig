@@ -23,7 +23,33 @@
 	</div>
 	<div id="my-orders">
 
-</div>
+		<h2>Mes commandes</h2>
+		<table class="table">
+			<thead>
+
+				<tr>
+					<th>N° de commande</th>
+					<th>Date de commande</th>
+					<th>Prix de la commande</th>
+					<th>Details de la commande</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				{% for order in orders %}
+					<tr>
+						<td>{{order.code}}</td>
+						<td>{{order.createdAt|date(d/m/Y)}}</td>
+						<td>{{order.total}}</td>
+						<td><a href="#">Voir les détails</a></td>
+					</tr>
+				{% endfor %}
+
+			</tbody>
+
+		</table>
+	</div>
 
 
 {% endblock %}
