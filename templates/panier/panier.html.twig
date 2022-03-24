@@ -7,45 +7,68 @@
 
 {% block body %}
 
-	{% if articles | length > 0 %}
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Nom</th>
-					<th>Images</th>
-					<th>Quantité</th>
-					<th>Prix TTC</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for article in articles %}
+	<div class="col-md-10 mx-auto">
+
+		{% if monPanier.id_product is defined and monPanier.id_product|length > 0 %}
+
+
+			<table class="table table-bordered table-light table-hover table-striped">
+
+				<thead class="table-dark text-center">
+
 					<tr>
-						<td>{{ article.product.name }}</td>
-						<td><img style="width: 200px" src="{{asset('uploads/images/' ~ article.product.images)}}" alt="{{article.product.name}}"></td>
-						<td>{{article.quantity}}</td>
-							<td>{{ article.product.prixTTC|format_number({fraction_digit: 2}) * article.quantity }}
-							€</td>
-						<td><a href="{{path('panier_delete', {'id': article.product.id})}}">Retirer du panier</a></td>
+
+						<th class="text-light">Nom</th>
+						<th class="text-light">Quantité</th>
+						<th class="text-light">Prix unitaire (€)</th>
+						<th class="text-light">Prix total TTC (€)</th>
+						<th class="text-light">Actions</th>
+
 					</tr>
-				{% endfor %}
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="3">
-						Total :</td>
-					<td>{{total|format_number({fraction_digit: 2})}}
-						€</td>
-				</tr>
 
-			</tfoot>
-		</tbody>
-	</table>
+				</thead>
 
-	<a href="{{ path('panier_validate')}}">valider le panier</a>
-	<a href="{{ path('panier_delete_all')}}">vider le panier</a>
+				<tbody>
+
+					{% set count = monPanier.id_product|length -1 %}
+					{% for i in 0..count %}
+
+						<tr>
+							<td>{{monPanier.name[i]}}</td>
+							<td class="text-center">{{monPanier.quantity[i]}}</td>
+							<td class="text-center">{{monPanier.unit_Price[i]}}</td>
+							<td class="text-center">{{monPanier.total_Price_TTC[i]}}</td>
+							<td class="d-flex justify-content-center"><a  class="btn btn-danger" href="{{path('panier_delete', {'id': monPanier.id_product[i]}) }}"><i class="bi bi-x-square text-light"></i> Retirer du panier</a></td>
+
+						</tr>
+					{% endfor %}
 
 
-{% else %}
-	<p>Votre panier est vide</p>
-{% endif %}{% endblock %}
+				</tbody>
+
+				<tfoot class="table-info">
+
+					<tr>
+						<th class="text-warning" colspan="3">Total du panier (€)</th>
+						<td class="text-warning text-center">{{total}}</td>
+						<td class="d-flex justify-content-center"><a class="btn btn-danger" href="{{ path('panier_delete_all')}}"> <i class="bi bi-x-square text-light"></i> vider le panier</a></td>
+					</tr>
+
+				</tfoot>
+
+			</table>
+
+
+		{% else %}
+			<p>Votre panier est vide</p>
+		{% endif %}
+
+		<div class="col-md-12 d-flex flex-row-reverse ">
+
+			
+			<a class="btn btn-success" href="{{ path('panier_validate')}}">valider le panier</a>
+		</div>
+	</div>
+
+
+{% endblock %}

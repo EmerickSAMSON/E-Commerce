@@ -4,122 +4,70 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\OrderItem;
-use App\Entity\Product;
 use App\Repository\ProductRepository;
 use App\Repository\OrderItemRepository;
+use App\Repository\OrderRepository;
+use App\Service\Panier;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class PanierController extends AbstractController
 {
     #[Route('/panier', name: 'app_panier')]
-    public function index(SessionInterface $session, ProductRepository $repoProduct): Response
+    public function index(RequestStack $requestStack, Panier $panier)
     {
-        $panier = $session->get('panier', []);
+        $session = $requestStack->getSession();
+        $monPanier = $session->get('panier');
 
-        $infoPanier = [];
-
-        foreach ($panier as $id => $quantity) {
-            $infoPanier[] = [
-                'product' => $repoProduct->find($id),
-                'quantity' => $quantity,
-            ];
-        }
-
-        $total = 0;
-
-        foreach ($infoPanier as $article) {
-            $prixTotal = $article['product']->getPrixTTC() * $article['quantity'];
-            $total += $prixTotal;
-        }
+        // dump($monPanier);
+        
+                $total = $panier->totalPanier();
+        
+                // dd($total);
 
         return $this->render('panier/panier.html.twig', [
-            'articles' => $infoPanier,
-            'total' => $total
+            "monPanier" => $monPanier,
+            "total" => $total
         ]);
     }
 
-    #[Route('/panier/add/{id}', name: 'panier_add', methods: "GET")]
-    public function add($id, SessionInterface $session)
+    #[Route('/panier/add', name: 'panier_add')]
+    public function add_panier(Request $request, ProductRepository $productRepository, Panier $panier)
     {
-        $panier = $session->get('panier', []);
-
-        if (!empty($panier[$id])) {
-            $panier[$id]++;
-        } else {
-            $panier[$id] = 1;
-        }
-
-
-        $session->set('panier', $panier);
-
-        return $this->redirectToRoute('homepage');
+        $quantity = $request->request->get('quantity');
+        $id_product = $request->request->get('id');
+        $product = $productRepository->find($id_product);
+        
+        $panier->add($product->getName(),$id_product,$quantity,$product->getPrixTTC());
+        return $this->redirectToRoute('app_panier');
     }
 
     #[Route('/panier/delete/{id}', name: 'panier_delete', methods: "GET")]
-    public function delete(Product $product, SessionInterface $session,ProductRepository $repoProduct)
+    public function delete($id, Panier $panier)
     {
-
-
-        $panier = $session->get('panier', []);
-        $id = $product->getId();
-
-        if (!empty($panier[$id])) {
-            if ($panier[$id] > 1) {
-                $panier[$id] --;
-            } else {
-                unset($panier[$id]);
-            }
-            
-        } else {
-            $panier[$id] = 1;
-        }
-        
-
-        // dd($panier);
-        $session->set('panier', $panier);
-
+        $panier->remove($id);   
         return $this->redirectToRoute('app_panier');
     }
 
     #[Route('/panier/delete', name: 'panier_delete_all', methods: "GET")]
-    public function deleteAll(SessionInterface $session)
+    public function deleteAll(Panier $panier)
     {
-        $panier = $session->get('panier');
-        $session->remove('panier', $panier);
-
+        $panier->clear();   
         return $this->redirectToRoute('app_panier');
     }
 
 
-    #[Route("/panier/validate", name: "panier_validate")]
-    public function panierValidate(SessionInterface $session, ProductRepository $productRepository, OrderItemRepository $orderItemRepository)
-    {
-        $panier = $session->get('panier');
+    #[Route('/panier/validation', name:'panier_validate')]
+    public function panierValidate(RequestStack $requestStack,Panier $panier, OrderRepository $orderRepository, OrderItemRepository $orderItemRepository){
 
-        $infoPanier = [];
+        
+        return $this->redirectToRoute('profil');
 
-        $orderItems = new OrderItem;
-
-        foreach ($panier as $id => $quantity) {
-            $infoPanier[] = [
-                'product' => $productRepository->find($id),
-                'quantity' => $quantity,
-            ];
-
-            dump($infoPanier);
-    
-            dump($orderItems);
-            
-            dd($panier);
-
-            $orderItemRepository->add(new OrderItem);
-        }
 
     }
+
+
+
 }
