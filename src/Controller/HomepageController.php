@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Users;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,10 +25,14 @@ class HomepageController extends AbstractController
 
     #[Route('/profil', name: 'profil')]
     public function profil(OrderRepository $orderRepository){
+
+        $user = $this->getUser();
+
         $order = $orderRepository->findAll();
 
         return $this->render('homepage/profil.html.twig',[
-            "orders" => $order
+            "orders" => $order,
+            "user" => $user,
         ]);
     }
 }

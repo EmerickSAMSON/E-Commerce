@@ -4,35 +4,64 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{product.name}}</h1>
 
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Description</th>
-				<td>{{ product.description }}</td>
-			</tr>
-			<tr>
-				<th>Images</th>
-				<td><img style="width: 300px" src="{{ asset('uploads/images/' ~ product.images)}}" alt="{{product.name}}"></td>
-			</tr>
-			<tr>
-				<th>PrixTTC</th>
-				<td>{{ product.prixTTC|format_number({fraction_digit: 2}) }}
-					€</td>
-			</tr>
-			<tr>
-				<th>PrixHT</th>
-				<td>{{ product.prixHT|format_number({fraction_digit: 2}) }}
-					€</td>
-			</tr>
-		</tbody>
-	</table>
 
-	<a href="{{ path('app_product_index') }}">Retour à la liste des produits</a>
+	<div class="product-info">
 
-	<a href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+		<h2>{{product.name | upper}}</h2>
 
-	<a href="{{ path('panier_add', {'id': product.id}) }}">Ajouter au panier</a>
-	{{ include('product/_delete_form.html.twig') }}
+		<img style="width: 400px" src="{{asset('uploads/images/' ~ product.images) }}" alt="{{product.name}}">
+
+		<p name="description">{{product.description}}</p>
+
+	</div>
+
+	<form action="{{path('panier_add')}}" method="post">
+
+		<select name="quantity">
+			{% for i in 1..10 %}
+				<option value="{{i}}">{{i}}</option>
+			{% endfor %}
+		</select>
+
+		<input type="hidden" name="id" value="{{product.id}}">
+
+		<div>
+			<input type="submit" value="Ajouter au panier" class="btn">
+		</div>
+
+
+	</form>
+
+
+	{# <h1>{{product.name}}</h1>
+	
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Description</th>
+					<td>{{ product.description }}</td>
+				</tr>
+				<tr>
+					<th>Images</th>
+					<td><img style="width: 300px" src="{{ asset('uploads/images/' ~ product.images)}}" alt="{{product.name}}"></td>
+				</tr>
+				<tr>
+					<th>PrixTTC</th>
+					<td>{{ product.prixTTC|format_number({fraction_digit: 2}) }}
+						€</td>
+				</tr>
+				<tr>
+					<th>PrixHT</th>
+					<td>{{ product.prixHT|format_number({fraction_digit: 2}) }}
+						€</td>
+				</tr>
+			</tbody>
+		</table>
+	
+		<a href="{{ path('app_product_index') }}">Retour à la liste des produits</a>
+	
+		<a href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+		<a href="{{ path('panier_add', {'id': product.id}) }}">Ajouter au panier</a>
+		{{ include('product/_delete_form.html.twig') }} #}
 {% endblock %}

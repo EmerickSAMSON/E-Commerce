@@ -7,17 +7,21 @@
 
 {% block body %}
 
-	<div id="product">
-		<div class="newProduct">
+	<div class="row justify-content-between mx-auto">
+
+
+
+
 			{% for product in products %}
-				<div class="card">
-					<h3>{{product.name}}</h3>
-					<img src="{{asset('uploads/images/' ~ product.images) }}" alt="{{product.name}}">
-					<p>{{product.description}}</p>
-					<p>{{ product.prixTTC|format_number({fraction_digit: 2}) }}€</p>
-					<a href="{{path('app_product_show', {'id':product.id})}}">Voir le produit</a>
+				<div class="card bg-light col-md-2 my-3 mx-5 shadow">
+					<h5 class="card-title text-uppercase text-center my-auto" style="min-height: 70px">{{product.name}}</h5>
+					<img class="card-img" src="{{asset('uploads/images/' ~ product.images) }}" alt="{{product.name}}">
+					<p class="card-text mt-4" style="min-height: 80px">{{product.description}}</p>
+					<p class="card-text">Prix: {{ product.prixTTC|format_number({fraction_digit: 2}) }}€</p>
+					<a class="btn btn-dark mb-3" href="{{path('app_product_show', {'id':product.id})}}">Voir le produit</a>
 				</div>
 			{% endfor %}
-		</div>
+
+
 	</div>
 {% endblock %}
